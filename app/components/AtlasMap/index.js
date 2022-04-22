@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 import DeckGL from '@deck.gl/react';
-import { LineLayer } from '@deck.gl/layers';
+import { LineLayer, ScatterplotLayer } from '@deck.gl/layers';
 import { StaticMap } from 'react-map-gl';
 import { FormattedMessage } from 'react-intl';
-import React from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+import { MapboxLayer } from '@deck.gl/mapbox';
 import messages from '../../containers/NotFoundPage/messages';
 
 // https://deck.gl/docs/get-started/using-with-react
+// https://deck.gl/docs/api-reference/mapbox/mapbox-layer
+// https://deck.gl/docs/api-reference/mapbox/overview
 
 const MAPBOX_ACCESS_TOKEN =
   'pk.eyJ1IjoiYmVsaG9zYXJ5IiwiYSI6ImNsMjlscGhxbjA0YW0zYm1wc2treTJ4N3UifQ.erHRHl9HBTMILJ5wn8BpLw';
@@ -34,13 +37,48 @@ const MAP_STYLE =
 
 /*eslint-disable */
 function AtlasMap() {
+  const [glContext, setGLContext] = useState();
+  const deckRef = useRef(null);
+  const mapRef = useRef(null);
+
+  const onMapLoad = useCallback(() => {
+    const map = mapRef.current.getMap();
+    const deck = deckRef.current.deck;
+    map.addLayer(new MapboxLayer({ id: 'my-scatterplot', deck }));
+  }, []);
+
+  const layers = [
+    new ScatterplotLayer({
+      id: 'my-scatterplot',
+      data,
+      getPosition: d => d.position,
+      getRadius: d => d.size,
+      getFillColor: [255, 0, 0],
+    }),
+  ];
+
   return (
     <DeckGL
+      ref={deckRef}
+      layers={layers}
       initialViewState={INITIAL_VIEW_STATE}
       controller={true}
-      layers={layers}
+      onWebGLInitialized={setGLContext}
+      glOptions={{
+        /* To render vector tile polygons correctly */
+        stencil: true,
+      }}
     >
-      <StaticMap mapStyle={MAP_STYLE} />
+      {glContext && (
+        /* This is important: Mapbox must be instantiated after the WebGLContext is available */
+        <StaticMap
+          ref={mapRef}
+          gl={glContext}
+          mapStyle="mapbox://styles/mapbox/light-v9"
+          mapboxApiAccessToken={MAPBOX_ACCESS_TOKEN}
+          onLoad={onMapLoad}
+        />
+      )}
     </DeckGL>
   );
 }

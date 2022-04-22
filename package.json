@@ -66,6 +66,7 @@
   "dependencies": {
     "@babel/polyfill": "7.4.3",
     "@deck.gl/layers": "^8.7.7",
+    "@deck.gl/mapbox": "^8.7.7",
     "@deck.gl/react": "^8.7.7",
     "chalk": "^2.4.2",
     "compression": "1.7.4",

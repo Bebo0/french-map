@@ -9,11 +9,11 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Helmet } from 'react-helmet';
 import messages from './messages';
-import H2 from '../../components/H2';
+import H1 from '../../components/H1';
 import CenteredSection from './CenteredSection';
 import Section from './Section';
-import H1 from '../../components/H1';
-import Header from "../../components/Header";
+import Header from '../../components/Header';
+import P from '../../components/P';
 
 export default function HomePage() {
   return (
@@ -31,11 +31,11 @@ export default function HomePage() {
             <FormattedMessage {...messages.homeHeader} />
           </Header>
         </CenteredSection>
-        {/*<Section>*/}
-        {/*  <H2>*/}
-        {/*    <FormattedMessage {...messages.testMessage} />*/}
-        {/*  </H2>*/}
-        {/*</Section>*/}
+        <Section>
+          <P>
+            <FormattedMessage {...messages.activitiesMessage} />
+          </P>
+        </Section>
       </div>
     </div>
   );

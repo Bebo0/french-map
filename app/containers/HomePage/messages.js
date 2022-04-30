@@ -14,7 +14,10 @@ export default defineMessages({
   },
   testMessage: {
     id: `${scope}.testMessage`,
-    defaultMessage:
-      'Test Message',
+    defaultMessage: 'Test Message',
+  },
+  activitiesMessage: {
+    id: `${scope}.activitiesMessage`,
+    defaultMessage: 'Here are some activities you can try with your class...',
   },
 });

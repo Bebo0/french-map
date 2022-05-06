@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import React, { useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 
+import '../../data/test.mp3';
 import * as L from 'leaflet';
 import messages from '../NotFoundPage/messages';
 
@@ -51,15 +52,37 @@ function AtlasMap() {
       // eslint-disable-next-line global-require
       shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
     });
+    var stadia_outdoors_map = L.tileLayer(
+      'https://tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{r}.png',
+      {
+        maxZoom: 20,
+        attribution:
+          '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+      },
+    );
 
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
+    stadia_outdoors_map.addTo(map);
+
+    // var base_map = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    //   attribution:
+    //     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    // });
+
+    // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    //   attribution:
+    //     '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    // }).addTo(map);
+
+    // https://link.springer.com/article/10.1007/s42489-019-00006-2
+    const test_content =
+      '<b>Bebo Elhosary </b><br><iframe src="../../data/test.mp3" width="640" height="480"></iframe>';
+
+    const test_content2 =
+      ' <audio controls>  <source src="../../data/test.mp3" type="audio/mp3"> Your browser does not support the audio element. </audio>';
 
     L.marker(qbc)
       .addTo(map)
-      .bindPopup('Bonjour.<br> Je me souviens.')
+      .bindPopup(test_content)
       .openPopup();
   }, []);
 

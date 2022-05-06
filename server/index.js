@@ -12,7 +12,10 @@ const ngrok =
     ? require('ngrok')
     : false;
 const { resolve } = require('path');
+const p = require('path');
 const app = express();
+
+app.use('/data', express.static(p.join(__dirname, 'data')));
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
 // app.use('/api', myApi);

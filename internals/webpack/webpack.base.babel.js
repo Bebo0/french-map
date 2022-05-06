@@ -52,7 +52,7 @@ module.exports = options => ({
             loader: 'svg-url-loader',
             options: {
               // Inline files smaller than 10 kB
-              limit: 10 * 1024,
+              limit: 1000 * 1024,
               noquotes: true,
             },
           },
@@ -65,7 +65,7 @@ module.exports = options => ({
             loader: 'url-loader',
             options: {
               // Inline files smaller than 10 kB
-              limit: 10 * 1024,
+              limit: 1000 * 1024,
             },
           },
           {
@@ -101,8 +101,15 @@ module.exports = options => ({
         use: {
           loader: 'url-loader',
           options: {
-            limit: 10000,
+            limit: 100000,
           },
+        },
+      },
+      {
+        test: /\.mp3$/,
+        loader: 'file-loader',
+        options: {
+          limit: 100000,
         },
       },
     ],
